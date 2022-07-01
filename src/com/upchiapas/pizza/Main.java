@@ -8,12 +8,10 @@ import com.upchiapas.pizza.models.Pizza;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
-import javax.swing.JOptionPane;
 import java.util.Random;
 
 public class Main {
     public static void main(String[] args){
-
         int idPizza = 0;
         int idCompra = 0;
         ArrayList<Pizza> catalogo = new ArrayList<>();
@@ -31,7 +29,8 @@ public class Main {
             System.out.println("1) Agregar pizza al catalogo");
             System.out.println("2) Generar el pedido");
             System.out.println("3) Imprimir las ventas realizadas");
-            System.out.println("4) Salir");
+            System.out.println("4) Pedido Ordenado alfabeticamete");
+            System.out.println("5) Salir");
             System.out.println("--------------------------");
             System.out.println("--------------------------");
             opcion = sc.nextInt();
@@ -86,13 +85,12 @@ public class Main {
                     System.out.println("\nSubtotal: " + orden.getTotal()+"\n\n");
                     break;
                 case 3:
-                    System.out.println("'Reporte de ventas'");
+                    System.out.println("Reporte de ventas");
                     for (Iterator iterator = pedidos.iterator(); iterator.hasNext();) {
                         System.out.println("-----------------------------------------------------------------------------");
                         System.out.println("-----------------------------------------------------------------------------");
                         OrdenCompra ordenReporte = (OrdenCompra) iterator.next();
                         Random random = new Random(System.nanoTime());
-                        System.out.println("Numero de Orden: " + random.nextFloat());
                         System.out.println("Nombre del cliente: " + ordenReporte.getNombreCliente());
                         System.out.println("Numero de telefono del cliente: " + ordenReporte.getNoTelefonico());
                         System.out.println("Productos: ");
@@ -107,6 +105,25 @@ public class Main {
                     }
                     break;
                 case 4:
+                    String nombres[] = new String[pedidos.size()];
+                    for (int i=0; i< pedidos.size();i++){
+                        nombres[i] = pedidos.get(i).getNombreCliente();
+                    }
+                    String  auxiliar;
+                    for (int i=0; i< nombres.length - 1; i++){
+                        for (int j=0; j< nombres.length - 1; j++){
+                            if(nombres[j].compareTo(nombres[j+1])>0){
+                                auxiliar = nombres[j];
+                                nombres[j] = nombres[j + 1];
+                                nombres[j + 1] = auxiliar;
+                            }
+                        }
+                    }
+                    for (int i=0; i< nombres.length; i++){
+                        System.out.println("Cliente: " + nombres[i]);
+                    }
+                    break;
+                case 5:
                     System.out.println("Fue un gusto atenderle, vuelva pronto!");
                     isExit = true;
                     break;
